@@ -209,6 +209,10 @@ func (this *OpBuf) Flush(session *mgo.Session, ctx *OpCtx) {
 		var parts = strings.SplitN(n, ".", 2)
 		var results []map[string]interface{}
 		db, col := parts[0], parts[1]
+		// Skip config database, since we don't have permissions
+		if db == "config" {
+			continue
+		}
 		sel := bson.M{"_id": bson.M{"$in": opIds}}
 		collection := session.DB(db).C(col)
 		err := collection.Find(sel).All(&results)
