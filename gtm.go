@@ -790,6 +790,10 @@ retry:
 	for n, opIds := range ns {
 		var parts = strings.SplitN(n, ".", 2)
 		db, col := parts[0], parts[1]
+		// Skip config database, since we don't have permissions
+		if db == "config" {
+			continue
+		}
 		sel := bson.M{"_id": bson.M{"$in": opIds}}
 		collection := client.Database(db).Collection(col)
 		cursor, err := collection.Find(context.Background(), sel)
