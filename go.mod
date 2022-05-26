@@ -1,4 +1,4 @@
-module github.com/admithub/gtm/v2
+module github.com/monkeysas/gtm/v2
 
 go 1.14
 
